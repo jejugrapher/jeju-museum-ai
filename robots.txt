@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ID.github.io/jeju-museum-ai/sitemap.xml
