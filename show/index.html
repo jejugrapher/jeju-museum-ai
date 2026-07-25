@@ -445,26 +445,20 @@ padding:7px 16px;border-radius:100px;backdrop-filter:blur(6px);transition:opacit
 <script>
 (function(){
  var STOP=['click','mousedown','mouseup','touchstart','touchend'];
-
  var b=document.getElementById('writeBtn');
  STOP.forEach(function(ev){ b.addEventListener(ev,function(e){e.stopPropagation();}); });
  b.addEventListener('click',function(e){
    e.stopPropagation();
-   window.open('https://script.google.com/macros/s/AKfycbwL7koPW_cBVKm9mrg-DbBXMJ__Ma2yo5cqX1_-1_JNK07Jg9_CHNImIHm94uSt8Xyg/exec','_blank','noopener');
+   window.open('https://script.google.com/macros/s/AKfycbzIN3PNmVZ0a_fiG5fjZJqyVIBh9nGhSbpI1NOtNYaILQ87ipDBOxYbi1XpwCeuNSny/exec','_blank','noopener');
  });
-
  var q=document.getElementById('qrCard');
  STOP.forEach(function(ev){ q.addEventListener(ev,function(e){e.stopPropagation();}); });
-
- // 표지 슬라이드가 보일 때만 QR 을 띄운다
  var cover=document.querySelector('.slide.cover');
  function sync(){
    if(!cover) return;
-   var on = getComputedStyle(cover).display !== 'none';
-   q.style.display = on ? 'block' : 'none';
+   q.style.display = getComputedStyle(cover).display !== 'none' ? 'block' : 'none';
  }
- sync();
- setInterval(sync,150);
+ sync(); setInterval(sync,150);
 })();
 </script>
 </body></html>
