@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<style>
+  :root{
+    --bg:#FFF8EF; --card:#FFFFFF; --ink:#3A3226; --sub:#8A7E6C;
+    --line:#E9DFCF; --mint:#7FC8B4; --mint-d:#57A891;
+    --peach:#FFB899; --sky:#9CC9E8; --lemon:#FFD98A;
+    --shadow:0 6px 0 rgba(0,0,0,.06), 0 14px 28px rgba(120,100,70,.12);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; padding:22px 16px 60px;
+    background:var(--bg); color:var(--ink);
+    font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:760px;margin:0 auto;}
+  h1{font-size:30px;margin:0 0 4px;letter-spacing:-.5px;}
+  .lead{color:var(--sub);font-size:16px;margin:0 0 22px;}
+
+  .card{
+    background:var(--card); border:2px solid var(--line);
+    border-radius:24px; padding:22px; box-shadow:var(--shadow);
+    margin-bottom:18px;
+  }
+  .label{font-size:15px;color:var(--sub);margin:0 0 10px;font-weight:700;}
+
+  .seats{display:flex;flex-wrap:wrap;gap:10px;}
+  .seat{
+    width:56px;height:56px;border-radius:18px;border:2px solid var(--line);
+    background:#FCF6EC;color:var(--ink);font-size:20px;font-weight:800;
+    cursor:pointer;transition:.15s;
+  }
+  .seat:hover{transform:translateY(-2px);}
+  .seat.on{background:var(--mint);border-color:var(--mint-d);color:#fff;}
+
+  .q{margin:0 0 8px;font-size:20px;font-weight:800;}
+  .q span{font-size:14px;font-weight:600;color:var(--sub);margin-left:8px;}
+  .row{margin-bottom:20px;}
+  input[type=text]{
+    width:100%;padding:16px 18px;font-size:19px;
+    border:2px solid var(--line);border-radius:16px;background:#FCF9F4;
+    color:var(--ink);outline:none;font-family:inherit;
+  }
+  input[type=text]:focus{border-color:var(--mint);background:#fff;}
+
+  .c1{border-left:8px solid var(--peach);padding-left:12px;}
+  .c2{border-left:8px solid var(--sky);padding-left:12px;}
+  .c3{border-left:8px solid var(--lemon);padding-left:12px;}
+  .c4{border-left:8px solid var(--mint);padding-left:12px;}
+
+  .preview{
+    background:#F3FBF8;border:2px dashed var(--mint);
+    border-radius:18px;padding:18px;font-size:20px;line-height:1.6;
+    min-height:64px;color:var(--ink);
+  }
+  .preview.empty{color:#B6AC9B;font-size:16px;}
+
+  .send{
+    width:100%;padding:20px;border:none;border-radius:20px;
+    background:var(--mint);color:#fff;font-size:22px;font-weight:800;
+    cursor:pointer;box-shadow:0 6px 0 var(--mint-d);font-family:inherit;
+  }
+  .send:active{transform:translateY(3px);box-shadow:0 3px 0 var(--mint-d);}
+  .send[disabled]{background:#CFCFCF;box-shadow:0 6px 0 #B5B5B5;cursor:default;}
+
+  .msg{margin-top:14px;font-size:17px;min-height:26px;font-weight:700;}
+  .msg.ok{color:var(--mint-d);}
+  .msg.no{color:#D2705A;}
+
+  .done{text-align:center;padding:40px 20px;}
+  .done .big{font-size:32px;font-weight:800;margin-bottom:10px;}
+  .done .sent{
+    background:#F3FBF8;border:2px solid var(--mint);border-radius:18px;
+    padding:18px;font-size:20px;line-height:1.6;margin:18px 0 24px;
+  }
+  .again{
+    padding:16px 30px;border:2px solid var(--line);border-radius:18px;
+    background:#fff;font-size:18px;font-weight:700;cursor:pointer;font-family:inherit;
+    color:var(--ink);
+  }
+  .note{font-size:13px;color:var(--sub);text-align:center;margin-top:26px;line-height:1.6;}
+  .hide{display:none;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div id="form">
+    <h1>내 문장 만들기</h1>
+    <p class="lead">누가 · 어디서 · 어떻게 · 무엇을</p>
+
+    <div class="card">
+      <p class="label">내 자리 번호</p>
+      <div class="seats" id="seats"></div>
+    </div>
+
+    <div class="card">
+      <div class="row c1">
+        <p class="q">누가<span>무엇이 나오나요?</span></p>
+        <input type="text" id="who" placeholder="예) 커다란 고래가" autocomplete="off">
+      </div>
+      <div class="row c2">
+        <p class="q">어디서<span>어디에 있나요?</span></p>
+        <input type="text" id="where" placeholder="예) 밤바다에서" autocomplete="off">
+      </div>
+      <div class="row c3">
+        <p class="q">어떻게<span>어떤 모습인가요?</span></p>
+        <input type="text" id="how" placeholder="예) 별빛을 받으며 천천히" autocomplete="off">
+      </div>
+      <div class="row c4" style="margin-bottom:0">
+        <p class="q">무엇을<span>무엇을 하나요?</span></p>
+        <input type="text" id="what" placeholder="예) 헤엄쳐요" autocomplete="off">
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="label">내 문장</p>
+      <div class="preview empty" id="preview">칸을 채우면 여기에 문장이 만들어져요</div>
+    </div>
+
+    <button class="send" id="send">선생님에게 보내기</button>
+    <div class="msg" id="msg"></div>
+
+    <p class="note">
+      이름은 적지 않아요. 자리 번호만 있으면 돼요.<br>
+      전화번호, 학교 이름, 사는 곳은 쓰지 않아요.
+    </p>
+  </div>
+
+  <div id="done" class="hide">
+    <div class="done">
+      <div class="big">보냈어요</div>
+      <div class="sent" id="sentLine"></div>
+      <button class="again" id="again">한 번 더 만들기</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  var seat = '';
+
+  function $(id){ return document.getElementById(id); }
+
+  // 자리 버튼 만들기
+  google.script.run.withSuccessHandler(function(cfg){
+    var box = $('seats');
+    for (var i = 1; i <= cfg.seatMax; i++) {
+      var b = document.createElement('button');
+      b.className = 'seat';
+      b.textContent = i;
+      b.setAttribute('data-n', i);
+      b.onclick = function(){
+        var all = box.getElementsByClassName('seat');
+        for (var j = 0; j < all.length; j++) all[j].classList.remove('on');
+        this.classList.add('on');
+        seat = this.getAttribute('data-n');
+      };
+      box.appendChild(b);
+    }
+  }).getConfig();
+
+  function build(){
+    var parts = ['who','where','how','what'].map(function(k){
+      return $(k).value.trim();
+    }).filter(function(v){ return v !== ''; });
+    return parts.join(' ');
+  }
+
+  function refresh(){
+    var line = build();
+    var p = $('preview');
+    if (line === '') {
+      p.className = 'preview empty';
+      p.textContent = '칸을 채우면 여기에 문장이 만들어져요';
+    } else {
+      p.className = 'preview';
+      p.textContent = line;
+    }
+  }
+
+  ['who','where','how','what'].forEach(function(k){
+    $(k).addEventListener('input', refresh);
+  });
+
+  $('send').onclick = function(){
+    var line = build();
+    if (line === '') { show('칸을 채워 주세요', 'no'); return; }
+    if (seat === '') { show('자리 번호를 눌러 주세요', 'no'); return; }
+
+    $('send').disabled = true;
+    show('보내는 중…', 'ok');
+
+    google.script.run
+      .withSuccessHandler(function(res){
+        $('send').disabled = false;
+        if (res && res.ok) {
+          $('sentLine').textContent = res.line;
+          $('form').className = 'hide';
+          $('done').className = '';
+          window.scrollTo(0, 0);
+        } else {
+          show((res && res.msg) ? res.msg : '보내지 못했어요', 'no');
+        }
+      })
+      .withFailureHandler(function(){
+        $('send').disabled = false;
+        show('보내지 못했어요. 한 번 더 눌러 주세요.', 'no');
+      })
+      .submitSentence({
+        seat: seat,
+        who:  $('who').value,
+        where:$('where').value,
+        how:  $('how').value,
+        what: $('what').value
+      });
+  };
+
+  $('again').onclick = function(){
+    ['who','where','how','what'].forEach(function(k){ $(k).value = ''; });
+    refresh();
+    show('', 'ok');
+    $('done').className = 'hide';
+    $('form').className = '';
+    window.scrollTo(0, 0);
+  };
+
+  function show(t, cls){
+    var m = $('msg');
+    m.textContent = t;
+    m.className = 'msg ' + cls;
+  }
+
+  refresh();
+</script>
+</body>
+</html>
