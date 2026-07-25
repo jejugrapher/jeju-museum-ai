@@ -413,4 +413,29 @@ padding:7px 16px;border-radius:100px;backdrop-filter:blur(6px);transition:opacit
  paint();
 })();
 </script>
+
+<style>
+#writeBtn{position:fixed;top:16px;right:16px;z-index:80;
+ font-family:inherit;font-size:14px;font-weight:800;letter-spacing:-.2px;
+ color:#fff;background:#57A891;border:none;border-radius:100px;
+ padding:12px 20px;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.22);
+ transition:.15s}
+#writeBtn:hover{background:#4A9682;transform:translateY(-1px)}
+#writeBtn:active{transform:translateY(1px)}
+@media(max-width:640px){#writeBtn{top:10px;right:10px;font-size:12.5px;padding:10px 15px}}
+</style>
+<button id="writeBtn">✒️ 내 문장 만들기</button>
+<script>
+(function(){
+ var b=document.getElementById('writeBtn');
+ function stop(e){e.stopPropagation();}
+ ['click','mousedown','mouseup','touchstart','touchend'].forEach(function(ev){
+   b.addEventListener(ev,stop);
+ });
+ b.addEventListener('click',function(e){
+   e.stopPropagation();
+   window.open('https://script.google.com/macros/s/AKfycbxBdqSKrYd3_vgc5B8mLqBkA-I_ajrQyRRR_aDcA5FzEVQBYcHQKXqALhH0Iuv3G7Uv/exec','_blank','noopener');
+ });
+})();
+</script>
 </body></html>

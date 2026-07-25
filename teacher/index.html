@@ -112,6 +112,7 @@ footer{text-align:center;color:var(--faint);font-size:12px;margin-top:26px;line-
 <div class="toolbar">
  <button class="btn on" id="btnNotes">진행 노트 펼치기</button>
  <button class="btn" id="btnTop">맨 위로</button>
+ <button class="btn go" id="btnBoard">📥 받은 문장 열기</button>
  <span class="jump">총 41구간</span>
 </div>
 <section class="part"><div class="phead"><h2>1부</h2><div class="ptitle">AI 이야기와 고래</div></div>
@@ -759,6 +760,20 @@ footer{text-align:center;color:var(--faint);font-size:12px;margin-top:26px;line-
  b.addEventListener('click',function(){set(!open);});
  document.getElementById('btnTop').addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
  set(true);
+})();
+</script>
+
+<style>
+.toolbar .btn.go{background:#3F9E85;border-color:#3F9E85;color:#fff;font-weight:800}
+.toolbar .btn.go:hover{background:#378973;border-color:#378973;color:#fff}
+</style>
+<script>
+(function(){
+ var b=document.getElementById('btnBoard');
+ if(!b) return;
+ b.addEventListener('click',function(){
+   window.open('https://script.google.com/macros/s/AKfycbxBdqSKrYd3_vgc5B8mLqBkA-I_ajrQyRRR_aDcA5FzEVQBYcHQKXqALhH0Iuv3G7Uv/exec?v=t&k=museum','_blank','noopener');
+ });
 })();
 </script>
 </body></html>
