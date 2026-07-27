@@ -765,6 +765,17 @@ footer{text-align:center;color:var(--faint);font-size:12px;margin-top:26px;line-
 
 <style>.toolbar .btn.go{background:#3F9E85;border-color:#3F9E85;color:#fff;font-weight:800}
 .toolbar .btn.go:hover{background:#378973;border-color:#378973;color:#fff}</style>
-<script>(function(){var b=document.getElementById('btnBoard');if(!b)return;
-b.addEventListener('click',function(){window.open('https://script.google.com/macros/s/AKfycbxJE9dyPNgdFktJzcdKPY5OgVPzGACWnqUU4Ap_mEpAdV6x3bNpPxhzv0DwrR8bob8/exec?v=t&k=museum','_blank','noopener');});})();</script>
+<script>
+(function(){
+ var EXEC='https://script.google.com/macros/s/AKfycbyzH4CJ-nRyRkDIYejsQHoD_e_gUtQNcbH9tWkC-19Xi8Ap7ahikOt3UTQOWrQPWig9/exec', KEY='museum';
+ fetch('../app.json?t=' + Date.now())
+   .then(function(r){ return r.json(); })
+   .then(function(j){ if(j&&j.exec) EXEC=j.exec; if(j&&j.teacherKey) KEY=j.teacherKey; })
+   .catch(function(){});
+ var b=document.getElementById('btnBoard'); if(!b) return;
+ b.addEventListener('click',function(){
+   window.open(EXEC + '?v=t&k=' + encodeURIComponent(KEY), '_blank', 'noopener');
+ });
+})();
+</script>
 </body></html>
